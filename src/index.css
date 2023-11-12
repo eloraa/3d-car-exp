@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html,
+body,
+#root {
+    height: 100%;
+    color-scheme: dark;
+}
+
+img,
+svg,
+video {
+    @apply h-full w-full;
+}
+
+::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    width: 2px;
+    height: 2px;
+    background: #000;
+    border-radius: 9999999px;
+}
+
+input.appearance-none[type="date"]::-webkit-inner-spin-button,
+input.appearance-none[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
