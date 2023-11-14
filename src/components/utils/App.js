@@ -58,26 +58,44 @@ export const bindEvent = button => {
   if (eff) {
     return new Promise(res => {
       eff.then(controller => {
-        const mouseDown = () => {
+        let duration = 0,
+          frame;
+        const mouseDown = d => {
+          const downTime = new Date().getTime();
+          const hold = () => {
+            duration = new Date().getTime() - downTime;
+
+            if (duration >= 300) {
+              mouseDown('hold');
+              cancelAnimationFrame(frame);
+              return;
+            }
+            frame = requestAnimationFrame(hold);
+          };
+          if (d !== 'hold') return hold();
+
           document.querySelector('.overlay').style.opacity = 1;
-          document.querySelector('.top').style.transform = 'translateY(0%)';
-          document.querySelector('.bottom').style.transform = 'translateY(0%)';
+          if (!controller.forced) {
+            document.querySelector('.top').style.transform = 'translateY(0%)';
+            document.querySelector('.bottom').style.transform = 'translateY(0%)';
+          }
           button && (button.style.transform = 'translateY(-150%)');
-          controller.mouseDown()
+          controller.mouseDown();
         };
 
         const mouseUp = () => {
+          if (frame) cancelAnimationFrame(frame);
           document.querySelector('.overlay').style.opacity = 0;
           document.querySelector('.top').style.transform = 'translateY(-100%)';
           document.querySelector('.bottom').style.transform = 'translateY(100%)';
           button && (button.style.transform = 'translateY(0%)');
-          // controller.mouseUp()
+          controller.mouseUp();
         };
         document.addEventListener('mousedown', mouseDown);
         document.addEventListener('mouseup', mouseUp);
         document.addEventListener('touchstart', mouseDown);
         document.addEventListener('touchend', mouseUp);
-        res(controller)
+        res(controller);
       });
     });
   }

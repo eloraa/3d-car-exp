@@ -2,7 +2,6 @@ export class AudioController {
   constructor(audioBuffer) {
     this.audioBuffer = audioBuffer;
     this.isPlaying = false;
-    this.maxVolume = 5;
     this.currentVolume = 0;
     this.currentFrequency = 24000;
     this.initialized = false;
@@ -13,17 +12,18 @@ export class AudioController {
     if (this.forced) return;
     if (!this.isPlaying) return;
     this.onDown = true;
-    this.animate(1, 275, 800, 'audio');
+    this.animate(.5, 275, 800, 'audio');
   }
   mouseUp() {
     if (this.forced) return;
     if (!this.isPlaying) return;
     this.onDown = false;
-    this.animate(5, 24000, 800, 'audio');
+    this.animate(.5, 24000, 800, 'audio');
   }
 
   play() {
     this.source = this.audioContext.createBufferSource();
+    this.effect()
     this.source.buffer = this.buffer;
     this.isPlaying = true;
 
@@ -59,7 +59,7 @@ export class AudioController {
   setVolume(value) {
     let target = 0;
     if (value) {
-      target = 1 * this.maxVolume;
+      target = 1;
       if (!this.isPlaying) this.play();
     } else {
       target = 0;
@@ -77,7 +77,6 @@ export class AudioController {
   animate(target, targetFrequency, duration, type, easing, force) {
     if (!this.isPlaying) return;
     this.forced = force;
-    console.trace();
     if (!this.initialized) return;
     if (this.anim[type]) cancelAnimationFrame(this.anim[type]);
     const startTime = performance.now();
@@ -100,7 +99,6 @@ export class AudioController {
       this.currentFrequency = startFrequency + (targetFrequency - startFrequency) * easingFunction[easing || 'easeInOutCirc'](progress);
 
       if (type === 'audio') {
-        console.log(this.currentVolume, this.currentFrequency, targetFrequency);
         this.effect(this.currentVolume, this.currentFrequency);
       }
 
@@ -166,7 +164,7 @@ export class AudioController {
 
       this.context.beginPath();
 
-      const amplitude = getAmplitude() * 10.0 * this.gainNode.gain.value;
+      const amplitude = getAmplitude() * 60.0 * this.gainNode.gain.value;
       const saturation = Math.min(100, (amplitude / 2.0) * 100);
 
       this.context.strokeStyle = `hsl(0deg ${saturation}% 45.69%)`;
@@ -195,7 +193,7 @@ export class AudioController {
     }
 
     if (!this.filter) this.filter = this.audioContext.createBiquadFilter();
-    this.filter.frequency.value = 24000;
+    this.filter.frequency.value = this.currentFrequency;
     this.filter.Q.value = 1;
 
     if (!this.gainNode) this.gainNode = this.audioContext.createGain();

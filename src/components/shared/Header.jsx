@@ -12,10 +12,12 @@ export const Header = () => {
     if (popup) {
       if (controller && !controller?.isvol) {
         controller.currentFrequency = 275;
+        controller.currentVolume = 1;
+        controller.forced = 'force'
       }
-      controller && controller.animate(1, 275, 1200, 'audio', 'easeInOut', 'force');
+      controller && controller.animate(.5, 275, 1200, 'audio', 'easeInOut', 'force');
     } else {
-      controller && controller.animate(5, 24000, 1200, 'audio', 'easeInOut', false);
+      controller && controller.animate(1, 24000, 1200, 'audio', 'easeInOut', false);
     }
   }, [popup, controller]);
 
