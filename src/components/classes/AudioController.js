@@ -10,10 +10,12 @@ export class AudioController {
   }
 
   mouseDown() {
+    if(this.forced) return
     this.onDown = true;
     this.animate(1, 275, 800, 'audio');
   }
   mouseUp() {
+    if(this.forced) return
     this.onDown = false;
     this.animate(5, 24000, 800, 'audio');
   }
@@ -25,10 +27,8 @@ export class AudioController {
 
     this.source.onended = () => {
       if (!this.intention) {
-        console.log(this.pausedAt, this.startedAt);
         this.pausedAt = 0;
         this.startedAt = 0;
-        console.log('resetting boss');
         this.play()
       }
       this.intention = false
@@ -70,10 +70,13 @@ export class AudioController {
   }
 
   fade(target) {
-    this.animate(target, 24000, 3000, 'audio');
+    this.animate(target, this.currentFrequency, 3000, 'audio');
+    this.isvol = true
   }
 
-  animate(target, targetFrequency, duration, type, easing) {
+  animate(target, targetFrequency, duration, type, easing, force) {
+    console.log(targetFrequency, easing, force);
+    this.forced = force
     if (!this.initialized) return;
     if (this.anim[type]) cancelAnimationFrame(this.anim[type]);
     const startTime = performance.now();

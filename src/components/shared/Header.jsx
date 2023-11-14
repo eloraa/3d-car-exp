@@ -8,9 +8,10 @@ export const Header = () => {
   const { controller } = useContext(AudioControllerContext);
   useEffect(() => {
     if (popup) {
-      controller?.animate(1, 275, 1200, 'audio', 'easeInOut');
+      if (controller && !controller?.isvol) controller.currentFrequency = 275;
+      controller?.animate(1, 275, 1200, 'audio', 'easeInOut', 'force');
     } else {
-      controller?.animate(5, 24000, 1200, 'audio', 'easeInOut');
+      controller?.animate(5, 24000, 1200, 'audio', 'easeInOut', false);
     }
   }, [popup, controller]);
 
