@@ -13,11 +13,17 @@ export class AudioController {
     if(this.forced) return
     this.onDown = true;
     this.animate(1, 275, 800, 'audio');
+    document.querySelector('.overlay').style.opacity = 1
+    document.querySelector('.top').style.transform = 'translateY(0%)'
+    document.querySelector('.bottom').style.transform = 'translateY(0%)'
   }
   mouseUp() {
     if(this.forced) return
     this.onDown = false;
     this.animate(5, 24000, 800, 'audio');
+    document.querySelector('.overlay').style.opacity = 0
+    document.querySelector('.top').style.transform = 'translateY(-100%)'
+    document.querySelector('.bottom').style.transform = 'translateY(100%)'
   }
 
   play() {
@@ -75,7 +81,6 @@ export class AudioController {
   }
 
   animate(target, targetFrequency, duration, type, easing, force) {
-    console.log(targetFrequency, easing, force);
     this.forced = force
     if (!this.initialized) return;
     if (this.anim[type]) cancelAnimationFrame(this.anim[type]);

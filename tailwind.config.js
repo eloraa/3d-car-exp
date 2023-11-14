@@ -7,7 +7,8 @@ export default {
         sans: "'Open Sans', sans-serif",
       },
       colors: {
-        green: '#c1ff00',
+        'green-0': '#c1ff00',
+        'red-0': '#ff4c41',
       },
       animation: {
         border: 'background ease infinite',
