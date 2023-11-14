@@ -12,18 +12,20 @@ export class AudioController {
   mouseDown() {
     if(this.forced) return
     this.onDown = true;
-    this.animate(1, 275, 800, 'audio');
     document.querySelector('.overlay').style.opacity = 1
     document.querySelector('.top').style.transform = 'translateY(0%)'
     document.querySelector('.bottom').style.transform = 'translateY(0%)'
+    if(!this.isPlaying) return
+    this.animate(1, 275, 800, 'audio');
   }
   mouseUp() {
     if(this.forced) return
     this.onDown = false;
-    this.animate(5, 24000, 800, 'audio');
     document.querySelector('.overlay').style.opacity = 0
     document.querySelector('.top').style.transform = 'translateY(-100%)'
     document.querySelector('.bottom').style.transform = 'translateY(100%)'
+    if(!this.isPlaying) return
+    this.animate(5, 24000, 800, 'audio');
   }
 
   play() {
@@ -81,6 +83,7 @@ export class AudioController {
   }
 
   animate(target, targetFrequency, duration, type, easing, force) {
+    if(!this.isPlaying) return
     this.forced = force
     if (!this.initialized) return;
     if (this.anim[type]) cancelAnimationFrame(this.anim[type]);
@@ -104,7 +107,6 @@ export class AudioController {
       this.currentFrequency = startFrequency + (targetFrequency - startFrequency) * easingFunction[easing || 'easeInOutCirc'](progress);
 
       if (type === 'audio') {
-        console.log(this.currentVolume, this.currentFrequency);
         this.effect(this.currentVolume, this.currentFrequency);
       }
 
