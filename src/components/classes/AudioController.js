@@ -10,21 +10,15 @@ export class AudioController {
   }
 
   mouseDown() {
-    if(this.forced) return
+    if (this.forced) return;
+    if (!this.isPlaying) return;
     this.onDown = true;
-    document.querySelector('.overlay').style.opacity = 1
-    document.querySelector('.top').style.transform = 'translateY(0%)'
-    document.querySelector('.bottom').style.transform = 'translateY(0%)'
-    if(!this.isPlaying) return
     this.animate(1, 275, 800, 'audio');
   }
   mouseUp() {
-    if(this.forced) return
+    if (this.forced) return;
+    if (!this.isPlaying) return;
     this.onDown = false;
-    document.querySelector('.overlay').style.opacity = 0
-    document.querySelector('.top').style.transform = 'translateY(-100%)'
-    document.querySelector('.bottom').style.transform = 'translateY(100%)'
-    if(!this.isPlaying) return
     this.animate(5, 24000, 800, 'audio');
   }
 
@@ -37,28 +31,26 @@ export class AudioController {
       if (!this.intention) {
         this.pausedAt = 0;
         this.startedAt = 0;
-        this.play()
+        this.play();
       }
-      this.intention = false
+      this.intention = false;
     };
 
     if (this.pausedAt) {
       this.startedAt = Date.now() - this.pausedAt;
       this.source.start(0, this.pausedAt / 1000);
-      // this.source.loop = true;
       this.effect();
       this.equalize();
     } else {
       this.startedAt = Date.now();
       this.source.start(0);
-      // this.source.loop = true;
       this.effect();
       this.equalize();
     }
   }
 
   pause() {
-    this.intention = true
+    this.intention = true;
     this.source.stop(0);
     this.pausedAt = Date.now() - this.startedAt;
     this.isPlaying = false;
@@ -79,12 +71,13 @@ export class AudioController {
 
   fade(target) {
     this.animate(target, this.currentFrequency, 3000, 'audio');
-    this.isvol = true
+    this.isvol = true;
   }
 
   animate(target, targetFrequency, duration, type, easing, force) {
-    if(!this.isPlaying) return
-    this.forced = force
+    if (!this.isPlaying) return;
+    this.forced = force;
+    console.trace();
     if (!this.initialized) return;
     if (this.anim[type]) cancelAnimationFrame(this.anim[type]);
     const startTime = performance.now();
@@ -107,10 +100,9 @@ export class AudioController {
       this.currentFrequency = startFrequency + (targetFrequency - startFrequency) * easingFunction[easing || 'easeInOutCirc'](progress);
 
       if (type === 'audio') {
+        console.log(this.currentVolume, this.currentFrequency, targetFrequency);
         this.effect(this.currentVolume, this.currentFrequency);
       }
-
-      // Update your system with this.currentVolume and this.currentFrequency here
 
       if (progress < 1) {
         requestAnimationFrame(this.anim[type]);
@@ -134,20 +126,14 @@ export class AudioController {
     node.appendChild(this.canvas);
 
     return new Promise(r => {
-      // Decode the audio data into an AudioBuffer
       this.audioContext.decodeAudioData(this.audioBuffer, buffer => {
-        // Create a buffer source node
         this.source = this.audioContext.createBufferSource();
-        // this.source.connect(this.audioContext.destination);
         this.buffer = buffer;
-        // Set the buffer to the buffer source node
         this.source.buffer = buffer;
 
         this.play();
         this.effect();
         this.equalize();
-        document.addEventListener('mousedown', this.mouseDown.bind(this));
-        document.addEventListener('mouseup', this.mouseUp.bind(this));
         this.initialized = true;
         r();
       });
@@ -201,35 +187,6 @@ export class AudioController {
     draw();
   }
 
-  effect2(value) {
-    if (value) {
-      // this.source.detune.value = value
-      this.filter.gain.value = value; // Quality factor (adjust as needed)
-      return;
-    }
-
-    if (!this.filter) this.filter = this.audioContext.createBiquadFilter();
-    this.filter.type = 'lowpass';
-    this.filter.frequency.value = 350; // Initial frequency (adjust as needed)
-    this.filter.Q.value = 1; // Quality factor (adjust as needed)
-
-    if (!this.gainNode) this.gainNode = this.audioContext.createGain();
-    this.gainNode.gain.value = this.currentVolume; // Initial gain (adjust as needed)
-
-    this.source.detune.value = 0;
-
-    // Connect the buffer source to the filter, the filter to the gain node, and the gain node to the destination (speakers)
-    this.filter.connect(this.gainNode);
-    this.source.connect(this.filter);
-    this.gainNode.connect(this.audioContext.destination);
-
-    try {
-      this.source.disconnect(this.gainNode);
-    } catch (err) {
-      return;
-    }
-  }
-
   effect(value, frequency) {
     if (!isNaN(value)) {
       this.gainNode.gain.value = value;
@@ -238,13 +195,12 @@ export class AudioController {
     }
 
     if (!this.filter) this.filter = this.audioContext.createBiquadFilter();
-    this.filter.frequency.value = 24000; // Initial frequency (adjust as needed)
-    this.filter.Q.value = 1; // Quality factor (adjust as needed)
+    this.filter.frequency.value = 24000;
+    this.filter.Q.value = 1;
 
     if (!this.gainNode) this.gainNode = this.audioContext.createGain();
-    this.gainNode.gain.value = this.currentVolume; // Initial gain (adjust as needed)
+    this.gainNode.gain.value = this.currentVolume;
 
-    // Connect the buffer source to the filter, the filter to the gain node, and the gain node to the destination (speakers)
     this.filter.connect(this.gainNode);
     this.source.connect(this.filter);
     this.gainNode.connect(this.audioContext.destination);

@@ -1,19 +1,28 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { About } from './About';
 import { AudioControllerContext } from '../context/AudioController';
+import { bindEvent } from '../utils/App';
 
 export const Header = () => {
   const [popup, setPopup] = useState(false);
+  const [init, setinit] = useState(false);
 
   const { controller } = useContext(AudioControllerContext);
   useEffect(() => {
     if (popup) {
-      if (controller && !controller?.isvol) controller.currentFrequency = 275;
-      controller?.animate(1, 275, 1200, 'audio', 'easeInOut', 'force');
+      if (controller && !controller?.isvol) {
+        controller.currentFrequency = 275;
+      }
+      controller && controller.animate(1, 275, 1200, 'audio', 'easeInOut', 'force');
     } else {
-      controller?.animate(5, 24000, 1200, 'audio', 'easeInOut', false);
+      controller && controller.animate(5, 24000, 1200, 'audio', 'easeInOut', false);
     }
   }, [popup, controller]);
+
+  useLayoutEffect(() => {
+    if (!init) bindEvent();
+    else setinit(true);
+  }, [init]);
 
   return (
     <>

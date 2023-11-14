@@ -4,7 +4,7 @@ import { AudioController } from '../classes/AudioController';
 let initiated = false;
 
 export const AudioEffect = button => {
-  if(!button) return
+  if (!button) return;
   if (initiated) return;
   initiated = true;
 
@@ -41,7 +41,7 @@ export const AudioEffect = button => {
           },
           { once: true }
         );
-        res(controller)
+        res(controller);
       },
       function (xhr) {
         if (xhr.lengthComputable) {
@@ -50,4 +50,35 @@ export const AudioEffect = button => {
       }
     );
   });
+};
+
+export const bindEvent = button => {
+  const eff = AudioEffect(button);
+
+  if (eff) {
+    return new Promise(res => {
+      eff.then(controller => {
+        const mouseDown = () => {
+          document.querySelector('.overlay').style.opacity = 1;
+          document.querySelector('.top').style.transform = 'translateY(0%)';
+          document.querySelector('.bottom').style.transform = 'translateY(0%)';
+          button && (button.style.transform = 'translateY(-150%)');
+          controller.mouseDown()
+        };
+
+        const mouseUp = () => {
+          document.querySelector('.overlay').style.opacity = 0;
+          document.querySelector('.top').style.transform = 'translateY(-100%)';
+          document.querySelector('.bottom').style.transform = 'translateY(100%)';
+          button && (button.style.transform = 'translateY(0%)');
+          // controller.mouseUp()
+        };
+        document.addEventListener('mousedown', mouseDown);
+        document.addEventListener('mouseup', mouseUp);
+        document.addEventListener('touchstart', mouseDown);
+        document.addEventListener('touchend', mouseUp);
+        res(controller)
+      });
+    });
+  }
 };

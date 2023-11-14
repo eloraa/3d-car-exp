@@ -2,7 +2,7 @@ export const Footer = () => {
   return (
     <footer className="font-semibold flex items-center justify-between gap-4">
       <div className="flex items-center justify-between gap-4">
-        <button className="p-[1px] audio relative rounded-full overflow-hidden">
+        <button className="p-[1px] audio relative rounded-full overflow-hidden transition-transform duration-500">
           <div className="absolute inset-0 polygon(0% 0%, 0% 100%, 9% 100%, 7% 7%, 92% 7%, 90% 96%, 7% 94%, 6% 100%, 100% 100%, 100% 0%)">
             <div className="absolute -inset-[1000%] bg-[conic-gradient(from_90deg_at_50%_50%,_theme(colors.neutral.400)_0%,_theme(colors.black)_50%,_theme(colors.neutral.400)_100%)] animate-spin"></div>
           </div>
