@@ -2,7 +2,7 @@ import { func, string } from 'prop-types';
 
 export const About = ({ className, setPopup }) => {
   return (
-    <div className={className ? className : ''}>
+    <div className={`fixed flex flex-col inset-0 bg-black/50 backdrop-blur-md md:px-16 px-6 md:py-[2.4rem] py-6 transition-opacity duration-500 z-20 ${className ? className : ''}`}>
       <div className="flex justify-between uppercase items-center text-neutral-200">
         <h1>About</h1>
         <button className="flex items-center justify-center w-10 h-10 overflow-hidden border-white p-[2px] rounded-full font-bold relative" onClick={() => setPopup(false)}>

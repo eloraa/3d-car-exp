@@ -13,9 +13,9 @@ export const Header = () => {
       if (controller && !controller?.isvol) {
         controller.currentFrequency = 275;
         controller.currentVolume = 1;
-        controller.forced = 'force'
+        controller.forced = 'force';
       }
-      controller && controller.animate(.5, 275, 1200, 'audio', 'easeInOut', 'force');
+      controller && controller.animate(0.5, 275, 1200, 'audio', 'easeInOut', 'force');
     } else {
       controller && controller.animate(1, 24000, 1200, 'audio', 'easeInOut', false);
     }
@@ -39,12 +39,7 @@ export const Header = () => {
           </span>
         </button>
       </header>
-      <About
-        setPopup={setPopup}
-        className={`fixed flex flex-col inset-0 bg-neutral-400/5 backdrop-blur-md md:px-16 px-6 md:py-[2.4rem] py-6 transition-opacity duration-500 z-20 ${
-          popup ? 'opacity-1' : 'opacity-0 pointer-events-none'
-        }`}
-      ></About>
+      <About setPopup={setPopup} className={`${popup ? 'opacity-1' : 'opacity-0 pointer-events-none'}`}></About>
     </>
   );
 };
