@@ -1,6 +1,6 @@
 import { extend, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
-import { BufferAttribute, BufferGeometry, Mesh, OrthographicCamera, PerspectiveCamera, RGBAFormat, RawShaderMaterial, Scene, Vector2, WebGLRenderTarget } from "three";
+import { BufferAttribute, BufferGeometry, Mesh, OrthographicCamera, RGBAFormat, RawShaderMaterial, Scene, Vector2, WebGLRenderTarget } from "three";
 
 // Shader code
 const vertexShader = `precision highp float;
@@ -72,7 +72,7 @@ extend({ PostFX });
 
 // Custom component using the post-processing effect
 export const CustomPostProcessing = () => {
-  const { gl, scene, camera, size } = useThree();
+  const { gl, scene, camera } = useThree();
   const postFX = useRef();
 
   useEffect(() => {

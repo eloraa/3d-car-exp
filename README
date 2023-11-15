@@ -1,0 +1,37 @@
+3d-car-exp
+
+This project is inspired by the Gemini project (https://exp-gemini.lusion.co/style), and I've mostly followed this tutorial (https://youtu.be/lcMCVWYpnrI)
+
+Live Link
+https://bugatti-exp.vercel.app/
+
+Getting Started
+To get you started you can simply clone the repository:
+
+
+     git clone https://github.com/eloraa/3d-car-exp
+
+
+and install the dependencies
+
+
+     yarn
+
+
+Prerequisites
+You need git to clone the repository. You can get git from
+https://git-scm.com/
+
+A number of node.js tools is necessary to initialize and test the project. You must have node.js and its package manager (npm) installed. You can get them from  https://nodejs.org/. The tools/modules used in this project are listed in package.json and include yarn, and other packages.
+
+Run the Application
+Start development server:
+
+
+     yarn dev
+
+
+Build for Production
+Build the Application for production:
+
+     yarn build

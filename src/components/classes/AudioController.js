@@ -15,7 +15,7 @@ export class AudioController {
     if (this.forced) return;
     if (!this.isPlaying) return;
     this.onDown = true;
-    this.animate(.5, 275, 800, 'audio');
+    this.animate(0.5, 275, 800, 'audio');
   }
   mouseUp() {
     if (this.forced) return;
