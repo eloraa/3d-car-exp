@@ -1,3 +1,6 @@
+// Author: Neon
+// https://gihub.com/eloraa
+
 export class AudioController {
   constructor(audioBuffer) {
     this.audioBuffer = audioBuffer;
@@ -18,7 +21,7 @@ export class AudioController {
     if (this.forced) return;
     if (!this.isPlaying) return;
     this.onDown = false;
-    this.animate(.5, 24000, 800, 'audio');
+    this.animate(1, 24000, 800, 'audio');
   }
 
   play() {
@@ -164,8 +167,8 @@ export class AudioController {
 
       this.context.beginPath();
 
-      const amplitude = getAmplitude() * 60.0 * this.gainNode.gain.value;
-      const saturation = Math.min(100, (amplitude / 2.0) * 100);
+      const amplitude = getAmplitude() * 40.0 * this.gainNode.gain.value;
+      const saturation = Math.min(100, (amplitude / 4.0) * 100);
 
       this.context.strokeStyle = `hsl(0deg ${saturation}% 45.69%)`;
 

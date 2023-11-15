@@ -43,7 +43,7 @@ export const About = ({ className, setPopup }) => {
           </div>
           <div>
             <h1 className="uppercase text-xs font-medium text-neutral-400">Model Credit</h1>
-            <div className="grid grid-cols-[1fr_auto] gap-2 mt-2 text-base items-center md:inline-grid">
+            <div className="grid-cols-[1fr_auto] gap-2 mt-2 text-base items-center inline-grid">
               <a href="https://free3d.com/3d-model/bugatti-chiron-2017-model-31847.html" className="overflow-hidden text-ellipsis whitespace-nowrap" target="_blank" rel="noreferrer">
                 Bugatti Chiron 2017 Sports Car 3D Model
               </a>
@@ -61,7 +61,7 @@ export const About = ({ className, setPopup }) => {
           </div>
           <div>
             <h1 className="uppercase text-xs font-medium text-neutral-400">Sound Credit</h1>
-            <div className="grid grid-cols-[1fr_auto] gap-2 mt-2 text-base items-center md:inline-grid">
+            <div className="grid-cols-[1fr_auto] gap-2 mt-2 text-base items-center inline-grid">
               <div className="overflow-hidden text-ellipsis whitespace-nowrap">
                 <a href="https://exp-gemini.lusion.co/" target="_blank" rel="noreferrer">
                   Gemini Car Demo

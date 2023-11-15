@@ -74,21 +74,17 @@ export const bindEvent = button => {
           };
           if (d !== 'hold') return hold();
 
-          document.querySelector('.overlay').style.opacity = 1;
           if (!controller.forced) {
             document.querySelector('.top').style.transform = 'translateY(0%)';
             document.querySelector('.bottom').style.transform = 'translateY(0%)';
           }
-          button && (button.style.transform = 'translateY(-150%)');
           controller.mouseDown();
         };
 
         const mouseUp = () => {
           if (frame) cancelAnimationFrame(frame);
-          document.querySelector('.overlay').style.opacity = 0;
           document.querySelector('.top').style.transform = 'translateY(-100%)';
           document.querySelector('.bottom').style.transform = 'translateY(100%)';
-          button && (button.style.transform = 'translateY(0%)');
           controller.mouseUp();
         };
         document.addEventListener('mousedown', mouseDown);
