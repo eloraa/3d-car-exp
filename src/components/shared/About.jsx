@@ -14,7 +14,7 @@ export const About = ({ className, setPopup }) => {
           <div className="w-5 h-0.5 bg-neutral-400 rounded-full absolute rotate-[135deg]"></div>
         </button>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 text-base">
         <h1 className="max-w-md text-neutral-300">
           A long time ago, while browsing the web, I came across a project named{' '}
           <a href="https://exp-gemini.lusion.co/" target="_blank" rel="noreferrer" className="text-white">
